@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#174d73">
+  <meta name="description" content="茨城の名所・歴史・グルメに挑戦！30問から10問が出る、15秒制限の茨城愛クイズ。">
+  <title>あなたの茨城愛は何点？｜茨城愛クイズ</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;color:#183b57;background:#eef6fc}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;background:radial-gradient(circle at 90% 0%,#cce9ff 0,transparent 35%),linear-gradient(165deg,#f5faff,#e9f1ff)}
+    button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid #ef7c38;outline-offset:3px}
+    .wrap{width:min(100% - 28px,680px);margin:0 auto;padding:25px 0 48px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.1em;color:#205e86;margin-bottom:20px}
+    .brand-mark{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:#236eab;color:white;font-size:22px}
+    .card{background:#fff;border:1px solid #dce7f3;border-radius:28px;box-shadow:0 16px 45px #244b7030;padding:clamp(22px,5vw,42px)}
+    .eyebrow{color:#a63f69;font-weight:900;letter-spacing:.15em;font-size:.85rem;margin:0 0 10px}
+    h1{font-size:clamp(2rem,6vw,3.25rem);line-height:1.25;letter-spacing:-.04em;margin:0 0 18px}
+    h2{font-size:clamp(1.5rem,4.5vw,2rem);line-height:1.4;margin:0 0 20px}
+    p{line-height:1.8}.lead{font-size:1.08rem;color:#4c637b;margin:0 0 25px}
+    .hero-badge{width:90px;height:90px;display:grid;place-items:center;border-radius:26px;background:#fce2eb;font-size:48px;transform:rotate(-7deg);margin:0 0 24px}
+    .howto{background:#eef5fc;border-radius:16px;padding:16px 20px;margin:20px 0 25px;line-height:1.8}
+    .howto strong{color:#195a87}
+    .level-label{display:block;font-weight:800;margin-bottom:10px}
+    .levels{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:23px}
+    .level{background:#fff;border:2px solid #cadbea;color:#2a5170;border-radius:12px;padding:12px 5px;font-weight:800;min-height:48px}
+    .level[aria-pressed="true"]{background:#dfeffc;border-color:#236eab;box-shadow:inset 0 0 0 1px #236eab}
+    .primary,.secondary{width:100%;border:0;border-radius:15px;min-height:54px;font-weight:900;padding:12px 18px}
+    .primary{background:#216aaa;color:white;box-shadow:0 8px 0 #174a78}.primary:hover{background:#195b94}.primary:active{transform:translateY(4px);box-shadow:0 4px 0 #174a78}
+    .secondary{background:#e8f2fc;color:#185783;margin-top:12px}.secondary:hover{background:#d5e8fc}
+    .topline{display:flex;justify-content:space-between;gap:10px;font-weight:900;color:#2a5c7b;margin-bottom:12px}
+    .track{height:10px;border-radius:99px;background:#e3edf7;overflow:hidden;margin-bottom:22px}.fill{height:100%;width:0;background:#cf7093;transition:width .35s}
+    .timerbox{display:flex;align-items:center;justify-content:space-between;gap:14px;border:2px solid #dce8f4;border-radius:16px;padding:11px 16px;margin-bottom:20px;font-weight:800}
+    .timerbox.urgent{color:#a13027;border-color:#e8a198;background:#fff6f3}
+    .time{font-size:1.5rem;font-variant-numeric:tabular-nums}
+    .question-tag{color:#a63f69;font-size:.82rem;font-weight:900;letter-spacing:.12em}
+    .answers{display:grid;gap:10px;margin:20px 0}
+    .answer{width:100%;text-align:left;background:#fff;border:2px solid #dbe6f1;border-radius:14px;padding:15px 17px;color:#153d60;font-weight:800;min-height:57px;line-height:1.45}
+    .answer:hover:not(:disabled){border-color:#236eab;background:#f1f8ff}
+    .answer:disabled{cursor:default}.answer.correct{background:#e2f5e4;border-color:#16834c}.answer.wrong{background:#fff0eb;border-color:#d46a57}
+    .feedback{border-radius:16px;background:#eef6fc;padding:18px 19px;margin:10px 0 18px;border-left:5px solid #3376a3}
+    .feedback.bad{background:#fff5ee;border-left-color:#d07a37}.feedback strong{font-size:1.1rem}.feedback p{margin:6px 0 0}
+    .result-score{font-size:clamp(4rem,15vw,6rem);font-weight:1000;line-height:1;margin:16px 0;color:#216aaa;letter-spacing:-.08em}
+    .result-score small{font-size:1.4rem;letter-spacing:0;margin-left:8px}
+    .title-chip{display:inline-block;background:#fce1ed;color:#8b315b;border-radius:999px;font-weight:900;padding:8px 16px;margin:8px 0}
+    .result-copy{color:#47637a;margin-bottom:18px}.result-meta{border-top:1px solid #e2ebf4;padding-top:15px;color:#426478}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .foot{font-size:.78rem;color:#62768b;text-align:center;margin-top:18px;line-height:1.6}
+    @media(max-width:430px){.wrap{width:min(100% - 20px,680px);padding-top:14px}.card{border-radius:22px}.levels{gap:5px}.level{font-size:.92rem}.topline{font-size:.9rem}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">茨</span><span>IBARAKI LOVE QUIZ</span></div>
+    <section id="start" class="card">
+      <div class="hero-badge" aria-hidden="true">🌸</div>
+      <p class="eyebrow">茨城を、どこまで知ってる？</p>
+      <h1>あなたの茨城愛は<br>何点？</h1>
+      <p class="lead">名所、グルメ、歴史まで。10問であなたの茨城愛を測ろう！</p>
+      <div class="howto"><strong>遊び方</strong><br>30問からランダムで10問。各問4択、制限時間は15秒。正解8点＋早押しボーナス最大2点で、100点満点！</div>
+      <button id="start-btn" class="primary" type="button" onclick="window.quizStartFallback && window.quizStartFallback()">クイズを始める →</button>
+    </section>
+    <section id="quiz" class="card" hidden aria-live="off">
+      <div class="topline"><span id="count"></span><span id="score"></span></div>
+      <div class="track" role="progressbar" aria-label="クイズの進行" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0"><div id="progress" class="fill"></div></div>
+      <div id="timerbox" class="timerbox"><span>残り時間</span><span id="time" class="time" aria-live="off">15.0秒</span></div>
+      <p id="category" class="question-tag"></p>
+      <h2 id="question" tabindex="-1"></h2>
+      <div id="answers" class="answers" role="group" aria-label="回答の選択肢"></div>
+      <div id="feedback" class="feedback" hidden role="status"></div>
+      <button id="next-btn" class="primary" type="button" hidden>次の問題へ →</button>
+    </section>
+    <section id="result" class="card" hidden aria-live="polite">
+      <p class="eyebrow">RESULT</p>
+      <h1>あなたの茨城愛は…</h1>
+      <div class="result-score"><span id="final-score">0</span><small>点 / 100点</small></div>
+      <div id="rank" class="title-chip"></div>
+      <p id="result-copy" class="result-copy"></p>
+      <p id="result-meta" class="result-meta"></p>
+      <button id="image-share-btn" class="primary" type="button">画像を保存する</button>
+      <button id="copy-btn" class="secondary" type="button">シェア用リンクをコピー</button>
+      <button id="retry-btn" class="secondary" type="button">もう一度挑戦</button>
+    </section>
+    <div class="foot">このクイズは非公式のファン作品です。茨城県・自治体による公式企画ではありません。</div>
+  </main>
+  <script>
+    "use strict";
+    // 全30問から毎回ランダムに10問。aは正解の選択肢番号（0〜3）。
+    const QUESTIONS = [
+  {
+    "c": "基本",
+    "q": "茨城県の県庁所在地は？",
+    "o": [
+      "水戸市",
+      "つくば市",
+      "日立市",
+      "土浦市"
+    ],
+    "a": 0,
+    "e": "水戸市は茨城県の県庁所在地です。"
+  },
+  {
+    "c": "基本",
+    "q": "「茨城県」の正しい読み方は？",
+    "o": [
+      "いばらぎけん",
+      "いばらきけん",
+      "いばしろけん",
+      "いばらじょうけん"
+    ],
+    "a": 1,
+    "e": "「いばらきけん」と読みます。最後は濁らない「き」です。"
+  },
+  {
+    "c": "地理",
+    "q": "茨城県がある地方は？",
+    "o": [
+      "東北地方",
+      "中部地方",
+      "関東地方",
+      "近畿地方"
+    ],
+    "a": 2,
+    "e": "茨城県は関東地方の北東部に位置しています。"
+  },
+  {
+    "c": "地理",
+    "q": "茨城県の東側に広がる海は？",
+    "o": [
+      "日本海",
+      "瀬戸内海",
+      "オホーツク海",
+      "太平洋"
+    ],
+    "a": 3,
+    "e": "茨城県の東側は太平洋に面しています。"
+  },
+  {
+    "c": "記念日",
+    "q": "茨城県民の日は何月何日？",
+    "o": [
+      "11月13日",
+      "11月14日",
+      "10月1日",
+      "6月15日"
+    ],
+    "a": 0,
+    "e": "11月13日です。1871年のこの日に「茨城県」の県名が用いられたことにちなみます。"
+  },
+  {
+    "c": "シンボル",
+    "q": "茨城県の花は？",
+    "o": [
+      "ウメ",
+      "バラ",
+      "ヒマワリ",
+      "ネモフィラ"
+    ],
+    "a": 1,
+    "e": "県の花はバラです。県章にもバラのつぼみが表現されています。"
+  },
+  {
+    "c": "シンボル",
+    "q": "茨城県の木は？",
+    "o": [
+      "スギ",
+      "ケヤキ",
+      "ウメ",
+      "イチョウ"
+    ],
+    "a": 2,
+    "e": "県の木はウメ。県民からの応募をもとに選ばれました。"
+  },
+  {
+    "c": "シンボル",
+    "q": "茨城県の鳥は？",
+    "o": [
+      "ツバメ",
+      "キジ",
+      "ハクチョウ",
+      "ヒバリ"
+    ],
+    "a": 3,
+    "e": "県の鳥はヒバリです。県の広報紙の名前にも使われています。"
+  },
+  {
+    "c": "シンボル",
+    "q": "茨城県の魚は？",
+    "o": [
+      "ヒラメ",
+      "マダイ",
+      "アユ",
+      "サケ"
+    ],
+    "a": 0,
+    "e": "茨城県の魚はヒラメです。"
+  },
+  {
+    "c": "グルメ",
+    "q": "水戸の名物として知られる発酵食品は？",
+    "o": [
+      "チーズ",
+      "納豆",
+      "キムチ",
+      "くさや"
+    ],
+    "a": 1,
+    "e": "水戸納豆は茨城を代表する名物。鉄道の開通に伴う販売で広く知られるようになりました。"
+  },
+  {
+    "c": "グルメ",
+    "q": "茨城名物「干しいも」の主な原料は？",
+    "o": [
+      "じゃがいも",
+      "里いも",
+      "さつまいも",
+      "長いも"
+    ],
+    "a": 2,
+    "e": "さつまいもを蒸して乾燥させます。ひたちなか市などで盛んに作られています。"
+  },
+  {
+    "c": "グルメ",
+    "q": "茨城の冬の味覚「あんこう鍋」の主役は？",
+    "o": [
+      "タイ",
+      "サバ",
+      "ウナギ",
+      "アンコウ"
+    ],
+    "a": 3,
+    "e": "アンコウを使った鍋は茨城の代表的な冬の郷土料理です。"
+  },
+  {
+    "c": "名所",
+    "q": "水戸市にある日本三名園の一つは？",
+    "o": [
+      "偕楽園",
+      "兼六園",
+      "後楽園",
+      "栗林公園"
+    ],
+    "a": 0,
+    "e": "偕楽園は水戸市にあり、兼六園・後楽園とともに日本三名園に数えられます。"
+  },
+  {
+    "c": "歴史",
+    "q": "偕楽園を創設した水戸藩第9代藩主は？",
+    "o": [
+      "徳川家康",
+      "徳川斉昭",
+      "徳川光圀",
+      "徳川吉宗"
+    ],
+    "a": 1,
+    "e": "徳川斉昭が1842年に偕楽園を開きました。"
+  },
+  {
+    "c": "名所",
+    "q": "偕楽園の中にある建物の名前は？",
+    "o": [
+      "金閣",
+      "鳳凰堂",
+      "好文亭",
+      "天守閣"
+    ],
+    "a": 2,
+    "e": "好文亭は偕楽園内にあり、千波湖などを望むことができます。"
+  },
+  {
+    "c": "歴史",
+    "q": "徳川斉昭が水戸に設けた藩校は？",
+    "o": [
+      "足利学校",
+      "適塾",
+      "閑谷学校",
+      "弘道館"
+    ],
+    "a": 3,
+    "e": "弘道館は1841年に開設された水戸藩の藩校。偕楽園と一対の施設として構想されました。"
+  },
+  {
+    "c": "自然",
+    "q": "偕楽園の南東に広がる湖は？",
+    "o": [
+      "千波湖",
+      "中禅寺湖",
+      "芦ノ湖",
+      "諏訪湖"
+    ],
+    "a": 0,
+    "e": "千波湖は水戸市にあり、偕楽園の景観にも取り込まれています。"
+  },
+  {
+    "c": "名所",
+    "q": "国営ひたち海浜公園がある市は？",
+    "o": [
+      "日立市",
+      "ひたちなか市",
+      "北茨城市",
+      "神栖市"
+    ],
+    "a": 1,
+    "e": "国営ひたち海浜公園はひたちなか市にあります。"
+  },
+  {
+    "c": "花",
+    "q": "ひたち海浜公園の春の丘を青く彩る花は？",
+    "o": [
+      "ヒマワリ",
+      "ヒガンバナ",
+      "ネモフィラ",
+      "ツバキ"
+    ],
+    "a": 2,
+    "e": "春のみはらしの丘では、青いネモフィラが広がります。"
+  },
+  {
+    "c": "花",
+    "q": "ひたち海浜公園で秋に赤く色づく、丸い植物は？",
+    "o": [
+      "サボテン",
+      "ススキ",
+      "ラベンダー",
+      "コキア"
+    ],
+    "a": 3,
+    "e": "コキアはホウキグサとも呼ばれ、夏の緑から秋の赤へと変化します。"
+  },
+  {
+    "c": "自然",
+    "q": "筑波山を構成する二つの峰は？",
+    "o": [
+      "男体山と女体山",
+      "剣ヶ峰と宝永山",
+      "東岳と西岳",
+      "北峰と南峰"
+    ],
+    "a": 0,
+    "e": "筑波山は男体山と女体山の二つの峰を持つ山です。"
+  },
+  {
+    "c": "自然",
+    "q": "筑波山の最高峰・女体山の標高は？",
+    "o": [
+      "577m",
+      "877m",
+      "1,277m",
+      "1,877m"
+    ],
+    "a": 1,
+    "e": "女体山は標高877m。もう一方の男体山は871mです。"
+  },
+  {
+    "c": "自然",
+    "q": "山肌の色にちなむ筑波山の別名は？",
+    "o": [
+      "白峰",
+      "赤岳",
+      "紫峰",
+      "青峰"
+    ],
+    "a": 2,
+    "e": "朝夕で山肌の色が変わることから「紫峰」と呼ばれています。"
+  },
+  {
+    "c": "名所",
+    "q": "袋田の滝がある町は？",
+    "o": [
+      "大洗町",
+      "城里町",
+      "利根町",
+      "大子町"
+    ],
+    "a": 3,
+    "e": "袋田の滝は県北の大子町にある、日本三名瀑の一つです。"
+  },
+  {
+    "c": "自然",
+    "q": "袋田の滝の別名は？",
+    "o": [
+      "四度の滝",
+      "七色の滝",
+      "白糸の滝",
+      "音止の滝"
+    ],
+    "a": 0,
+    "e": "「四度（よど）の滝」と呼ばれます。四段に落ちる姿などに由来するとされています。"
+  },
+  {
+    "c": "名所",
+    "q": "牛久大仏の台座を含む高さは？",
+    "o": [
+      "80m",
+      "120m",
+      "180m",
+      "240m"
+    ],
+    "a": 1,
+    "e": "牛久市にある牛久大仏は、台座を含めて高さ120mです。"
+  },
+  {
+    "c": "工芸",
+    "q": "笠間市を代表する焼き物は？",
+    "o": [
+      "益子焼",
+      "有田焼",
+      "笠間焼",
+      "備前焼"
+    ],
+    "a": 2,
+    "e": "笠間焼は茨城を代表する伝統的工芸品。暮らしの器から造形作品まで作られています。"
+  },
+  {
+    "c": "工芸",
+    "q": "結城市などで受け継がれる伝統的な織物は？",
+    "o": [
+      "西陣織",
+      "博多織",
+      "久留米絣",
+      "結城紬"
+    ],
+    "a": 3,
+    "e": "結城紬は、手作業による伝統技法が受け継がれてきた織物です。"
+  },
+  {
+    "c": "科学",
+    "q": "JAXAの筑波宇宙センターがある市は？",
+    "o": [
+      "つくば市",
+      "水戸市",
+      "鹿嶋市",
+      "古河市"
+    ],
+    "a": 0,
+    "e": "つくば市にある宇宙開発の拠点で、宇宙飛行士の養成なども行われています。"
+  },
+  {
+    "c": "歴史",
+    "q": "鹿島神宮に祀られる、武の神として知られる神は？",
+    "o": [
+      "大国主大神",
+      "武甕槌大神",
+      "天照大神",
+      "菅原道真公"
+    ],
+    "a": 1,
+    "e": "武甕槌大神（たけみかづちのおおかみ）を祀り、古くから武の神として信仰されてきました。"
+  }
+];
+    const $=id=>document.getElementById(id);
+    const state={selected:[],index:0,points:0,correct:0,deadline:0,timer:null,locked:false};
+    const shuffle=list=>{const a=[...list];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+    function choose(){return shuffle(QUESTIONS).slice(0,10)}
+    function show(which){for(const id of ["start","quiz","result"])$(id).hidden=id!==which;window.scrollTo({top:0,behavior:"instant"})}
+    function stopTimer(){if(state.timer!==null){clearInterval(state.timer);state.timer=null}}
+    function start(){stopTimer();$("copy-btn").textContent="シェア用リンクをコピー";state.selected=choose();state.index=0;state.points=0;state.correct=0;show("quiz");renderQuestion()}
+    function renderQuestion(){
+      state.locked=false;const q=state.selected[state.index];
+      $("count").textContent=`第${state.index+1}問 / 10問`;
+      $("score").textContent=`${state.points}点`;
+      $("progress").style.width=`${state.index*10}%`;
+      document.querySelector(".track").setAttribute("aria-valuenow",String(state.index));
+      $("category").textContent=q.c;
+      $("question").textContent=q.q;
+      $("feedback").hidden=true;$("next-btn").hidden=true;
+      const answers=$("answers");answers.replaceChildren();
+      q.o.forEach((option,i)=>{const b=document.createElement("button");b.type="button";b.className="answer";b.textContent=`${"ABCD"[i]}. ${option}`;b.addEventListener("click",()=>answer(i));answers.append(b)});
+      $("timerbox").classList.remove("urgent");
+      state.deadline=performance.now()+15000;tick();state.timer=setInterval(tick,50);
+      $("question").focus({preventScroll:true});
+    }
+    function tick(){if(state.locked)return;const ms=Math.max(0,state.deadline-performance.now());$("time").textContent=`${(ms/1000).toFixed(1)}秒`;$("timerbox").classList.toggle("urgent",ms<=5000);if(ms<=0)answer(null)}
+    function answer(choice){
+      if(state.locked)return;
+      const remaining=Math.max(0,state.deadline-performance.now());
+      if(remaining<=0)choice=null;
+      state.locked=true;stopTimer();
+      const q=state.selected[state.index],isCorrect=choice===q.a;
+      let gained=0;
+      if(isCorrect){const elapsed=15-remaining/1000;const bonus=elapsed<=5?2:elapsed<=10?1:0;gained=8+bonus;state.points+=gained;state.correct++}
+      $("score").textContent=`${state.points}点`;
+      [...$("answers").children].forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add("correct");else if(i===choice)b.classList.add("wrong")});
+      const feedback=$("feedback");feedback.classList.toggle("bad",!isCorrect);
+      const heading=document.createElement("strong");heading.textContent=isCorrect?`正解！ +${gained}点`:choice===null?"時間切れ！":"残念！";
+      const detail=document.createElement("p");detail.textContent=`正解：${q.o[q.a]}。${q.e}`;
+      feedback.replaceChildren(heading,detail);feedback.hidden=false;
+      $("next-btn").textContent=state.index===9?"結果を見る →":"次の問題へ →";$("next-btn").hidden=false;
+      $("next-btn").focus({preventScroll:true});
+    }
+    function rankFor(points){if(points>=90)return["常陸の国マスター","もう茨城の案内人になれそう！"];if(points>=70)return["茨城愛の達人","かなり深い茨城愛です！"];if(points>=50)return["茨城通","名所も歴史もよく知っています！"];if(points>=30)return["茨城探検家","新しい茨城をまだまだ発見できそう！"];return["茨城ルーキー","ここから茨城の魅力を探していこう！"]}
+    function finish(){stopTimer();const [title,copy]=rankFor(state.points);$("final-score").textContent=state.points;$("rank").textContent=title;$("result-copy").textContent=copy;$("result-meta").textContent=`10問中${state.correct}問正解`;$("progress").style.width="100%";show("result")}
+    function shareText(){const [title]=rankFor(state.points);return `あなたの茨城愛は何点？\n${state.points}点／100点！称号は「${title}」🌸\n10問中${state.correct}問正解。あなたも挑戦！\n▼ 茨城愛クイズに挑戦\nhttps://tonde-saitama007.github.io/ibaraki-ai-quiz/\n#茨城愛クイズ`}
+    async function copyResult(){
+      const url="https://tonde-saitama007.github.io/ibaraki-ai-quiz/";
+      let ok=false;
+      try{await navigator.clipboard.writeText(url);ok=true}catch(error){
+        const t=document.createElement("textarea");t.value=url;document.body.appendChild(t);t.focus();t.select();
+        try{ok=document.execCommand("copy")}catch(e){}t.remove();
+      }
+      $("copy-btn").textContent=ok?"リンクをコピーしました！":"コピーできませんでした";
+    }
+    async function shareResultImage(){
+      const button=$("image-share-btn");
+      button.disabled=true;button.textContent="画像を準備中…";
+      try{
+        const canvas=document.createElement("canvas");
+        canvas.width=1080;canvas.height=1080;
+        const ctx=canvas.getContext("2d");
+        if(!ctx)throw new Error("Canvas unavailable");
+        ctx.fillStyle="#eef6fc";ctx.fillRect(0,0,1080,1080);
+        ctx.fillStyle="#236eab";
+        ctx.beginPath();ctx.roundRect(55,50,100,100,24);ctx.fill();
+        ctx.fillStyle="#fff";ctx.font='bold 65px "Noto Sans JP",sans-serif';
+        ctx.textAlign="center";ctx.fillText("茨",105,123);
+        ctx.textAlign="left";ctx.fillStyle="#205e86";
+        ctx.font='bold 43px sans-serif';ctx.fillText("IBARAKI LOVE QUIZ",180,115);
+        ctx.shadowColor="rgba(36,75,112,.12)";ctx.shadowBlur=28;ctx.shadowOffsetY=12;
+        ctx.fillStyle="#fff";ctx.beginPath();ctx.roundRect(55,190,970,835,42);ctx.fill();
+        ctx.shadowColor="transparent";ctx.shadowBlur=0;ctx.shadowOffsetY=0;
+        ctx.fillStyle="#a63f69";ctx.font="bold 33px sans-serif";ctx.fillText("RESULT",115,285);
+        ctx.fillStyle="#183b57";ctx.font='bold 65px "Noto Sans JP",sans-serif';
+        ctx.fillText("あなたの茨城愛は…",115,395);
+        ctx.fillStyle="#216aaa";ctx.font="bold 175px sans-serif";
+        const score=String(state.points);
+        ctx.fillText(score,115,630);
+        const scoreWidth=ctx.measureText(score).width;
+        ctx.font='bold 57px "Noto Sans JP",sans-serif';ctx.fillText("点 / 100点",135+scoreWidth,620);
+        const [rank,description]=rankFor(state.points);
+        ctx.font='bold 46px "Noto Sans JP",sans-serif';
+        const chipWidth=Math.min(850,ctx.measureText(rank).width+78);
+        ctx.fillStyle="#fce1ed";ctx.beginPath();ctx.roundRect(115,695,chipWidth,95,48);ctx.fill();
+        ctx.fillStyle="#8b315b";ctx.fillText(rank,154,759);
+        ctx.fillStyle="#4c637b";ctx.font='39px "Noto Sans JP",sans-serif';
+        ctx.fillText(description,115,865);
+        const blob=await new Promise(resolve=>canvas.toBlob(resolve,"image/png"));
+        if(!blob)throw new Error("PNG unavailable");
+        const url=URL.createObjectURL(blob);
+        const link=document.createElement("a");
+        link.href=url;link.download="ibaraki-love-quiz-result.png";
+        document.body.appendChild(link);link.click();link.remove();
+        setTimeout(()=>URL.revokeObjectURL(url),60000);
+      }catch(error){
+        alert("画像を保存できませんでした。Chromeで開き直してお試しください。");
+      }finally{
+        button.disabled=false;button.textContent="画像を保存する";
+      }
+    }
+    $("image-share-btn").addEventListener("click",shareResultImage);
+    window.quizStartFallback=start;
+    $("next-btn").addEventListener("click",()=>{if(state.index===9)finish();else{state.index++;renderQuestion()}});
+    $("retry-btn").addEventListener("click",()=>{stopTimer();$("copy-btn").textContent="シェア用リンクをコピー";show("start")});
+    $("copy-btn").addEventListener("click",copyResult);
+    document.addEventListener("visibilitychange",()=>{if(document.hidden===false&&state.timer!==null)tick()});
+  </script>
+</body>
+</html>
